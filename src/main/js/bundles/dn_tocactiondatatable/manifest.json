@@ -1,0 +1,34 @@
+{
+    "name": "dn_tocactiondatatable",
+    "version": "1.0.0-SNAPSHOT",
+    "title": "${bundleName}",
+    "description": "${bundleDescription}",
+    "vendor": "con terra GmbH",
+    "keywords": [
+        "toc"
+    ],
+    "icon": {},
+    "license": {},
+    "dependencies": {
+        "toc": "^4.7.0",
+        "resultcenter": "^4.7.0",
+        "agssearch": "^4.7.0"
+    },
+    "productName": "devnet-mapapps-toc-action-datatable",
+    "components": [
+        {
+            "name": "DatatableActionDefinitionFactory",
+            "provides": "toc.ActionDefinitionFactory",
+            "references": [
+                {
+                    "name": "_agsStoreFactory",
+                    "providing": "agssearch.AGSStoreFactory"
+                },
+                {
+                    "name": "_dataModel",
+                    "providing": "resultcenter.DataModel"
+                }
+            ]
+        }
+    ]
+}
