@@ -1,7 +1,7 @@
 # TOC Action Datatable
 This bundle provides an additional toc action that opens the map.apps resultcenter and shows all features of a layer in tabular form.
 
-![Screenshot App](https://github.com/conterra/mapapps-toc-action-datatable/blob/master/Screenshot.JPG)
+![Screenshot App](https://github.com/conterra/mapapps-toc-action-datatable/blob/master/screenshot.JPG)
 
 ## Sample App
 https://demos.conterra.de/mapapps/resources/apps/downloads_tocactiondatatable/index.html
