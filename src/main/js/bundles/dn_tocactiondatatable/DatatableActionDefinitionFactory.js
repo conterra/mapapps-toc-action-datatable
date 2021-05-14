@@ -62,11 +62,16 @@ export default class ExtendedDescriptionActionDefinitionFactory {
 
                 this.getMetadata(url).then((metadata) => {
                     let idProperty = this.getIdProperty(metadata.fields);
-                    let store = agsStoreFactory.createStore({
+                    const storeProps ={
                         id: "action_store_" + new Date().getTime(),
                         url: url,
                         idProperty: idProperty
-                    });
+                    };
+                    if(ref.definitionExpression) {
+                        storeProps.definitionExpression = ref.definitionExpression;
+                    }
+
+                    let store = agsStoreFactory.createStore(storeProps);
                     dataModel.setDatasource(store);
                 });
             },

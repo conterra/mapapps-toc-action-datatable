@@ -108,9 +108,10 @@
                 "map": {
                     "layers": [
                         {
-                            "id": "editing-1",
+                            "id": "stoerungen",
                             "type": "AGS_FEATURE",
-                            "url": "https://services.conterra.de/arcgis/rest/services/mapapps/stoerung/FeatureServer/0"
+                            "url": "https://services.conterra.de/arcgis/rest/services/mapapps/stoerung/FeatureServer/0",
+                            "definitionExpression": "art = 2"
                         },
                         {
                             "title": "PegelOnline WMS",
