@@ -7,7 +7,7 @@ This bundle provides an additional toc action that opens the map.apps resultcent
 https://demos.conterra.de/mapapps/resources/apps/downloads_tocactiondatatable/index.html
 
 ## Installation Guide
-**Requirement: map.apps 4.7.0**
+**Requirement: map.apps 4.13.0**
 
 Add the bundle "dn_tocactiondatatable" to your map.apps 4 app.
 
