@@ -41,6 +41,8 @@
     "bundles": {
         "toc": {
             "Config": {
+                "showBasemaps": true,
+                "showLayerLegend": true,
                 "actions": [
                     "datatable",
                     "zoom-to-extent",
