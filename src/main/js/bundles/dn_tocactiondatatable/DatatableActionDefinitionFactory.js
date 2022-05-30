@@ -41,7 +41,7 @@ export default class ExtendedDescriptionActionDefinitionFactory {
                 if (ref && ref.type !== "group") {
                     if (ref.type === "feature") {
                         return true;
-                    } else if (capabilities && capabilities.operations && capabilities.operations.supportsQuery) {
+                    } else if (capabilities?.operations?.supportsQuery) {
                         return true;
                     } else {
                         return false;
@@ -52,40 +52,15 @@ export default class ExtendedDescriptionActionDefinitionFactory {
             },
             trigger(tocItem) {
                 let ref = tocItem.ref;
-                let url = ref && ref.url;
-                if (ref.type === "feature") {
-                    url = url + "/" + ref.layerId;
-                }
-                if (!url) {
-                    return;
-                }
+                const storeProps = {
+                    id: "action_store_" + new Date().getTime(),
+                    layerId: ref.id
+                };
 
-                this.getMetadata(url).then((metadata) => {
-                    let idProperty = this.getIdProperty(metadata.fields);
-                    const storeProps ={
-                        id: "action_store_" + new Date().getTime(),
-                        url: url,
-                        idProperty: idProperty
-                    };
-                    if(ref.definitionExpression) {
-                        storeProps.definitionExpression = ref.definitionExpression;
-                    }
-
-                    let store = agsStoreFactory.createStore(storeProps);
-                    dataModel.setDatasource(store);
-                });
-            },
-            getIdProperty(fields) {
-                return fields.find((field) => {
-                    return field.type === "esriFieldTypeOID";
-                }).name;
-            },
-            getMetadata(url) {
-                return apprt_request(url, {
-                    handleAs: "json",
-                    query: {
-                        f: "json"
-                    }
+                agsStoreFactory.createStore(storeProps).then((store) => {
+                    store.load().then(() => {
+                        dataModel.setDatasource(store);
+                    });
                 });
             }
         };
