@@ -52,9 +52,13 @@ export default class ExtendedDescriptionActionDefinitionFactory {
             },
             trigger(tocItem) {
                 let ref = tocItem.ref;
+                let id = ref.id;
+                if (ref?.parent?.type === "map-image") {
+                    id = ref.parent.id + "/" + ref.id;
+                }
                 const storeProps = {
                     id: "action_store_" + new Date().getTime(),
-                    layerId: ref.id
+                    layerId: id
                 };
 
                 agsStoreFactory.createStore(storeProps).then((store) => {
