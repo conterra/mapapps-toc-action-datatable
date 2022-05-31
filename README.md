@@ -3,6 +3,9 @@ This bundle provides an additional toc action that opens the map.apps resultcent
 
 ![Screenshot App](https://github.com/conterra/mapapps-toc-action-datatable/blob/master/screenshot.JPG)
 
+## Build Status
+[![devnet-bundle-snapshot](https://github.com/conterra/mapapps-toc-action-datatable/actions/workflows/devnet-bundle-snapshot.yml/badge.svg)](https://github.com/conterra/mapapps-toc-action-datatable/actions/workflows/devnet-bundle-snapshot.yml)
+
 ## Sample App
 https://demos.conterra.de/mapapps/resources/apps/downloads_tocactiondatatable/index.html
 
