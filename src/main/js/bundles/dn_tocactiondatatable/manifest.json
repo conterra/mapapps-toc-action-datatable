@@ -10,9 +10,9 @@
     "icon": {},
     "license": {},
     "dependencies": {
-        "toc": "^4.7.0",
-        "resultcenter": "^4.7.0",
-        "agssearch": "^4.7.0"
+        "toc": "^4.13.0",
+        "resultcenter": "^4.13.0",
+        "agssearch": "^4.13.0"
     },
     "productName": "devnet-mapapps-toc-action-datatable",
     "components": [
