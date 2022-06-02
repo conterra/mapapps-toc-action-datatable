@@ -1,4 +1,5 @@
 # TOC Action Datatable
+
 This bundle provides an additional toc action that opens the map.apps resultcenter and shows all features of a layer in tabular form.
 
 ![Screenshot App](https://github.com/conterra/mapapps-toc-action-datatable/blob/master/screenshot.JPG)
@@ -12,35 +13,7 @@ https://demos.conterra.de/mapapps/resources/apps/downloads_tocactiondatatable/in
 ## Installation Guide
 **Requirement: map.apps 4.13.0**
 
-Add the bundle "dn_tocactiondatatable" to your map.apps 4 app.
-
-Configure the available toc actions in the toc bundle and add the *datatable* action:
-
-```
-"toc": {
-    "Config": {
-        "actions": [
-            "datatable",
-            "zoom-to-extent",
-            "activate-children",
-            "deactivate-children",
-            "change-opacity",
-            "show-description",
-            "show-copyright"
-        ]
-    }
-}
-```
-
-Otherwise you can simply use all available actions:
-
-```
-"toc": {
-    "Config": {
-        "actions":  ["*"]
-    }
-}
-```
+[dn_tocactiondatatable Documentation](https://github.com/conterra/mapapps-toc-action-datatable/tree/master/src/main/js/bundles/dn_tocactiondatatable)
 
 ## Development Guide
 ### Define the mapapps remote base
