@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import apprt_request from "apprt-request";
-
 const ID = "datatable";
 
-export default class ExtendedDescriptionActionDefinitionFactory {
+export default class DatatableActionDefinitionFactory {
     constructor(props) {
         this.supportedIds = [ID];
     }
