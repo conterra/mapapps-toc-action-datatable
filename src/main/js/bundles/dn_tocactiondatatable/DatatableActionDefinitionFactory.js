@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import apprt_request from "apprt-request";
-
 const ID = "datatable";
 
 export default class ExtendedDescriptionActionDefinitionFactory {
@@ -29,15 +27,18 @@ export default class ExtendedDescriptionActionDefinitionFactory {
         const i18n = this._i18n.get();
         const agsStoreFactory = this._agsStoreFactory;
         const dataModel = this._dataModel;
+        const resultViewerService = this._resultViewerService;
+
         return {
             id: ID,
             type: "button",
             label: i18n.actionLabel,
             icon: "icon-editor-table",
+
             isVisibleForItem(tocItem) {
-                let ref = tocItem.ref;
-                let parent = ref && ref.parent;
-                let capabilities = parent && parent.capabilities;
+                const ref = tocItem.ref;
+                const parent = ref && ref.parent;
+                const capabilities = parent && parent.capabilities;
                 if (ref && ref.type !== "group") {
                     if (ref.type === "feature") {
                         return true;
@@ -50,8 +51,9 @@ export default class ExtendedDescriptionActionDefinitionFactory {
                     return false;
                 }
             },
+
             trigger(tocItem) {
-                let ref = tocItem.ref;
+                const ref = tocItem.ref;
                 let id = ref.id;
                 if (ref?.parent?.type === "map-image") {
                     id = ref.parent.id + "/" + ref.id;
@@ -62,8 +64,36 @@ export default class ExtendedDescriptionActionDefinitionFactory {
                 };
 
                 agsStoreFactory.createStore(storeProps).then((store) => {
-                    store.load().then(() => {
-                        dataModel.setDatasource(store);
+                    store.load().then(async () => {
+                        // resulcenter is used
+                        if (dataModel) {
+                            dataModel.setDatasource(store);
+                        }
+                        // result-ui is used
+                        else if (resultViewerService) {
+                            const idsProvider = async ({ limit }) => {
+                                const result = await store.query({}, {
+                                    count: limit
+                                });
+                                return {
+                                    ids: result.map((item) => item.id)
+                                };
+                            };
+
+                            const dataTableFactory = resultViewerService.dataTableFactory;
+                            const dataTable = await dataTableFactory.createDataTableFromStoreAndQuery({
+                                dataTableTitle: store.title || store.id || i18n.searchResultTitle,
+                                dataSource: store,
+                                idsProvider
+                            });
+
+                            const dataTableCollection = dataTableFactory.createDataTableCollection([dataTable]);
+                            resultViewerService.open(dataTableCollection);
+                        }
+                        // neither resultcenter nor result-ui is available
+                        else {
+                            return;
+                        }
                     });
                 });
             }

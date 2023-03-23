@@ -17,7 +17,8 @@ module.exports = {
     root: {
         bundleName: "TOC Action Datatable",
         bundleDescription: "This bundle provides an additional toc action that opens the map.apps resultcenter and shows all features of a layer in tabular form.",
-        actionLabel: "Show attribute table"
+        actionLabel: "Show attribute table",
+        searchResultTitle: "Action Datatable"
     },
     de: true
 };
