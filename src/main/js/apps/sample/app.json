@@ -29,7 +29,8 @@
             "omnisearch",
             "locator-store",
             "toc",
-            "dn_tocactiondatatable"
+            "dn_tocactiondatatable",
+            "result-ui"
         ],
         "require": [
             "${app}.app"
