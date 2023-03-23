@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 con terra GmbH (info@conterra.de)
+ * Copyright (C) 2023 con terra GmbH (info@conterra.de)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,15 +27,18 @@ export default class DatatableActionDefinitionFactory {
         const i18n = this._i18n.get();
         const agsStoreFactory = this._agsStoreFactory;
         const dataModel = this._dataModel;
+        const resultViewerService = this._resultViewerService;
+
         return {
             id: ID,
             type: "button",
             label: i18n.actionLabel,
             icon: "icon-editor-table",
+
             isVisibleForItem(tocItem) {
-                let ref = tocItem.ref;
-                let parent = ref && ref.parent;
-                let capabilities = parent && parent.capabilities;
+                const ref = tocItem.ref;
+                const parent = ref && ref.parent;
+                const capabilities = parent && parent.capabilities;
                 if (ref && ref.type !== "group") {
                     if (ref.type === "feature") {
                         return true;
@@ -48,8 +51,9 @@ export default class DatatableActionDefinitionFactory {
                     return false;
                 }
             },
+
             trigger(tocItem) {
-                let ref = tocItem.ref;
+                const ref = tocItem.ref;
                 let id = ref.id;
                 if (ref?.parent?.type === "map-image") {
                     id = ref.parent.id + "/" + ref.id;
@@ -60,8 +64,36 @@ export default class DatatableActionDefinitionFactory {
                 };
 
                 agsStoreFactory.createStore(storeProps).then((store) => {
-                    store.load().then(() => {
-                        dataModel.setDatasource(store);
+                    store.load().then(async () => {
+                        // resulcenter is used
+                        if (dataModel) {
+                            dataModel.setDatasource(store);
+                        }
+                        // result-ui is used
+                        else if (resultViewerService) {
+                            const idsProvider = async ({ limit }) => {
+                                const result = await store.query({}, {
+                                    count: limit
+                                });
+                                return {
+                                    ids: result.map((item) => item.id)
+                                };
+                            };
+
+                            const dataTableFactory = resultViewerService.dataTableFactory;
+                            const dataTable = await dataTableFactory.createDataTableFromStoreAndQuery({
+                                dataTableTitle: store.title || store.id || i18n.searchResultTitle,
+                                dataSource: store,
+                                idsProvider
+                            });
+
+                            const dataTableCollection = dataTableFactory.createDataTableCollection([dataTable]);
+                            resultViewerService.open(dataTableCollection);
+                        }
+                        // neither resultcenter nor result-ui is available
+                        else {
+                            return;
+                        }
                     });
                 });
             }

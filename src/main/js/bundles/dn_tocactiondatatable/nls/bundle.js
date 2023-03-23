@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 con terra GmbH (info@conterra.de)
+ * Copyright (C) 2023 con terra GmbH (info@conterra.de)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,8 @@ module.exports = {
     root: {
         bundleName: "TOC Action Datatable",
         bundleDescription: "This bundle provides an additional toc action that opens the map.apps resultcenter and shows all features of a layer in tabular form.",
-        actionLabel: "Show attribute table"
+        actionLabel: "Show attribute table",
+        searchResultTitle: "Action Datatable"
     },
     de: true
 };
