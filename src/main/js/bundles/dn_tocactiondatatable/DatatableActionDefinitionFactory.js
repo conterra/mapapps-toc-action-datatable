@@ -65,12 +65,8 @@ export default class DatatableActionDefinitionFactory {
 
                 agsStoreFactory.createStore(storeProps).then((store) => {
                     store.load().then(async () => {
-                        // resulcenter is used
-                        if (dataModel) {
-                            dataModel.setDatasource(store);
-                        }
                         // result-ui is used
-                        else if (resultViewerService) {
+                        if (resultViewerService) {
                             const idsProvider = async ({ limit }) => {
                                 const result = await store.query({}, {
                                     count: limit
@@ -89,6 +85,10 @@ export default class DatatableActionDefinitionFactory {
 
                             const dataTableCollection = dataTableFactory.createDataTableCollection([dataTable]);
                             resultViewerService.open(dataTableCollection);
+                        }
+                        // resulcenter is used
+                        else if (dataModel) {
+                            dataModel.setDatasource(store);
                         }
                         // neither resultcenter nor result-ui is available
                         else {
