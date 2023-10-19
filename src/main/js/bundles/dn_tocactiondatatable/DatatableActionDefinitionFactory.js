@@ -39,8 +39,8 @@ export default class DatatableActionDefinitionFactory {
                 const ref = tocItem.ref;
                 const parent = ref && ref.parent;
                 const capabilities = parent && parent.capabilities;
-                if (ref && ref.type !== "group") {
-                    if (ref.type === "feature") {
+                if (ref && ref.sourceJSON?.type !== "Group Layer" && ref.type !== "group") {
+                    if (ref.sourceJSON?.type === "Feature Layer" || ref.type === "feature") {
                         return true;
                     } else if (capabilities?.operations?.supportsQuery) {
                         return true;
@@ -55,8 +55,8 @@ export default class DatatableActionDefinitionFactory {
             trigger(tocItem) {
                 const ref = tocItem.ref;
                 let id = ref.id;
-                if (ref?.parent?.type === "map-image") {
-                    id = ref.parent.id + "/" + ref.id;
+                if (ref?.layer?.type === "map-image") {
+                    id = ref.layer.id + "/" + ref.id;
                 }
                 const storeProps = {
                     id: "action_store_" + new Date().getTime(),
