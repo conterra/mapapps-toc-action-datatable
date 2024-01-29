@@ -44,7 +44,10 @@ export default class DatatableActionDefinitionFactory {
                         return true;
                     } else if (capabilities?.operations?.supportsQuery) {
                         return true;
-                    } else {
+                    } else if (parent.visibilityMode === "exclusive") {
+                        return ref.sublayers && tocItem.listMode === "hide-children";
+                    }
+                    else {
                         return false;
                     }
                 } else {
@@ -55,8 +58,10 @@ export default class DatatableActionDefinitionFactory {
             trigger(tocItem) {
                 const ref = tocItem.ref;
                 let id = ref.id;
-                if (ref?.layer?.type === "map-image") {
-                    id = ref.layer.id + "/" + ref.id;
+                if (ref?.type ===  "map-image") {
+                    id = `${id}/${ref.sublayers.items[0].id}`;
+                } else if (ref?.layer?.type === "map-image") {
+                    id = `${ref.layer.id}/${id}`;
                 }
                 const storeProps = {
                     id: "action_store_" + new Date().getTime(),
