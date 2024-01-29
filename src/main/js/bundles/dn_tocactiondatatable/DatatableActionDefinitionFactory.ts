@@ -1,3 +1,19 @@
+///
+/// Copyright (C) 2023 con terra GmbH (info@conterra.de)
+///
+/// Licensed under the Apache License, Version 2.0 (the "License");
+/// you may not use this file except in compliance with the License.
+/// You may obtain a copy of the License at
+///
+///         http://www.apache.org/licenses/LICENSE-2.0
+///
+/// Unless required by applicable law or agreed to in writing, software
+/// distributed under the License is distributed on an "AS IS" BASIS,
+/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+/// See the License for the specific language governing permissions and
+/// limitations under the License.
+///
+
 /*
  * Copyright (C) 2023 con terra GmbH (info@conterra.de)
  *
@@ -13,14 +29,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { InjectedReference } from "apprt-core/InjectedReference";
+import type { ActionDefinition } from "toc/api";
+import type { AGSStoreFactory } from "agssearch/api";
+import { Messages } from "./nls/bundle";
+import { ResultViewerService } from "result-api/api";
+import { TocItem } from "toc/model/TocItem";
+
 const ID = "datatable";
 
 export default class DatatableActionDefinitionFactory {
-    constructor(props) {
+    private _i18n: Messages;
+    private _dataModel: InjectedReference<any>;
+    private _agsStoreFactory: InjectedReference<AGSStoreFactory>;
+    private _resultViewerService: InjectedReference<ResultViewerService>;
+
+    private supportedIds: Array<string>;
+
+    constructor(props: Record<string, any>) {
         this.supportedIds = [ID];
     }
 
-    createDefinitionById(id) {
+    public createDefinitionById(id: string): ActionDefinition {
         if (ID !== id) {
             return;
         }
@@ -35,7 +65,7 @@ export default class DatatableActionDefinitionFactory {
             label: i18n.actionLabel,
             icon: "icon-editor-table",
 
-            isVisibleForItem(tocItem) {
+            isVisibleForItem(tocItem: TocItem): boolean {
                 const ref = tocItem.ref;
                 const parent = ref && ref.parent;
                 const capabilities = parent && parent.capabilities;
@@ -55,16 +85,16 @@ export default class DatatableActionDefinitionFactory {
                 }
             },
 
-            trigger(tocItem) {
+            trigger(tocItem: TocItem): void {
                 const ref = tocItem.ref;
                 let id = ref.id;
-                if (ref?.type ===  "map-image") {
+                if (ref?.type === "map-image") {
                     id = `${id}/${ref.sublayers.items[0].id}`;
                 } else if (ref?.layer?.type === "map-image") {
                     id = `${ref.layer.id}/${id}`;
                 }
                 const storeProps = {
-                    id: "action_store_" + new Date().getTime(),
+                    id: `action_store_${new Date().getTime()}`,
                     layerId: id
                 };
 

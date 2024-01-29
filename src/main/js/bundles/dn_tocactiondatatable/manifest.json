@@ -8,6 +8,7 @@
         "toc"
     ],
     "icon": {},
+    "main": "",
     "dependencies": {
         "toc": "^4.13.0",
         "agssearch": "^4.13.0"
