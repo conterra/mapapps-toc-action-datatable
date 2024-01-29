@@ -89,6 +89,41 @@
                 "map": {
                     "layers": [
                         {
+                            "type": "GROUP",
+                            "title": "Bäume",
+                            "visible": true,
+                            "visibilityMode": "exclusive",
+                            "layers": [
+                                {
+                                    "id": "baum_children",
+                                    "url": "https://services.conterra.de/arcgis/rest/services/mapapps/Baumkataster_Zustand/MapServer",
+                                    "type": "AGS_DYNAMIC",
+                                    "visible": true,
+                                    "title": "Bäume mit Children",
+                                    "sublayers": [
+                                        {
+                                            "id": 0,
+                                            "visible": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "baum_nochildren",
+                                    "url": "https://services.conterra.de/arcgis/rest/services/mapapps/Baumkataster_Zustand/MapServer",
+                                    "type": "AGS_DYNAMIC",
+                                    "visible": true,
+                                    "title": "Bäume ohne Children",
+                                    "listMode": "hide-children",
+                                    "sublayers": [
+                                        {
+                                            "id": 0,
+                                            "visible": true
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
                             "id": "stoerungen",
                             "type": "AGS_FEATURE",
                             "url": "https://services.conterra.de/arcgis/rest/services/mapapps/stoerung/FeatureServer/0",
