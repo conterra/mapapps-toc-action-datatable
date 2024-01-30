@@ -25,9 +25,9 @@ const ID = "datatable";
 
 export default class DatatableActionDefinitionFactory {
     private _i18n: Messages;
-    private _dataModel: InjectedReference<any>;
     private _agsStoreFactory: InjectedReference<AGSStoreFactory>;
-    private _resultViewerService: InjectedReference<ResultViewerService>;
+    private dataModel: InjectedReference<any>;
+    private resultViewerService: InjectedReference<ResultViewerService>;
 
     private supportedIds: Array<string>;
 
@@ -41,8 +41,7 @@ export default class DatatableActionDefinitionFactory {
         }
         const i18n = this._i18n.get();
         const agsStoreFactory = this._agsStoreFactory;
-        const dataModel = this._dataModel;
-        const resultViewerService = this._resultViewerService;
+        const that = this;
 
         return {
             id: ID,
@@ -86,7 +85,7 @@ export default class DatatableActionDefinitionFactory {
                 agsStoreFactory.createStore(storeProps).then((store) => {
                     store.load().then(async () => {
                         // result-ui is used
-                        if (resultViewerService) {
+                        if (that.resultViewerService) {
                             const idsProvider = async ({ limit }) => {
                                 const result = await store.query({}, {
                                     count: limit
@@ -96,7 +95,7 @@ export default class DatatableActionDefinitionFactory {
                                 };
                             };
 
-                            const dataTableFactory = resultViewerService.dataTableFactory;
+                            const dataTableFactory = that.resultViewerService.dataTableFactory;
                             const dataTable = await dataTableFactory.createDataTableFromStoreAndQuery({
                                 dataTableTitle: store.title || store.id || i18n.searchResultTitle,
                                 dataSource: store,
@@ -104,11 +103,11 @@ export default class DatatableActionDefinitionFactory {
                             });
 
                             const dataTableCollection = dataTableFactory.createDataTableCollection([dataTable]);
-                            resultViewerService.open(dataTableCollection);
+                            that.resultViewerService.open(dataTableCollection);
                         }
                         // resulcenter is used
-                        else if (dataModel) {
-                            dataModel.setDatasource(store);
+                        else if (that.dataModel) {
+                            that.dataModel.setDatasource(store);
                         }
                         // neither resultcenter nor result-ui is available
                         else {
@@ -118,5 +117,13 @@ export default class DatatableActionDefinitionFactory {
                 });
             }
         };
+    }
+
+    setDataModel(dataModel: any): void {
+        this.dataModel = dataModel;
+    }
+
+    setResultViewerService(resultViewerService: any): void {
+        this.resultViewerService = resultViewerService;
     }
 }
