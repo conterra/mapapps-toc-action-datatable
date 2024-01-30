@@ -13,6 +13,7 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 ///
+
 import { InjectedReference } from "apprt-core/InjectedReference";
 import type { ActionDefinition } from "toc/api";
 import type { AGSStoreFactory } from "agssearch/api";

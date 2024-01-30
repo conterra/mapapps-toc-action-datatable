@@ -13,6 +13,7 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 ///
+
 const i18n = {
     root: ({
         bundleName: "TOC Action Datatable",
