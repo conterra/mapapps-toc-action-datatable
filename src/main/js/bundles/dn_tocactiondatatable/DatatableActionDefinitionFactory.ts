@@ -41,6 +41,7 @@ export default class DatatableActionDefinitionFactory {
         }
         const i18n = this._i18n.get();
         const agsStoreFactory = this._agsStoreFactory;
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         const that = this;
 
         return {
