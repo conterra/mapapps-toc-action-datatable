@@ -8,6 +8,7 @@
         "toc"
     ],
     "icon": {},
+    "main": "",
     "dependencies": {
         "toc": "^4.13.0",
         "agssearch": "^4.13.0"
@@ -23,12 +24,12 @@
                     "providing": "agssearch.AGSStoreFactory"
                 },
                 {
-                    "name": "_dataModel",
+                    "name": "dataModel",
                     "providing": "resultcenter.DataModel",
                     "cardinality": "0..1"
                 },
                 {
-                    "name": "_resultViewerService",
+                    "name": "resultViewerService",
                     "providing": "result-api.ResultViewerService",
                     "cardinality": "0..1"
                 }

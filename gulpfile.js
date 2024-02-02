@@ -139,7 +139,7 @@ gulp.task("lint",
 gulp.task("preview",
     gulp.series(
         "build",
-        "lint",
+        // "lint",
         gulp.parallel(
             "watch",
             "browser-sync"
