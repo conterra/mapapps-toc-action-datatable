@@ -26,8 +26,8 @@ const ID = "datatable";
 export default class DatatableActionDefinitionFactory {
     private _i18n: Messages;
     private _agsStoreFactory: InjectedReference<AGSStoreFactory>;
-    private dataModel: InjectedReference<any>;
-    private resultViewerService: InjectedReference<ResultViewerService>;
+    private _dataModel: InjectedReference<any>;
+    private _resultViewerService: InjectedReference<ResultViewerService>;
 
     private supportedIds: Array<string>;
 
@@ -86,7 +86,7 @@ export default class DatatableActionDefinitionFactory {
                 agsStoreFactory.createStore(storeProps).then((store) => {
                     store.load().then(async () => {
                         // result-ui is used
-                        if (that.resultViewerService) {
+                        if (that._resultViewerService) {
                             const idsProvider = async ({ limit }) => {
                                 const result = await store.query({}, {
                                     count: limit
@@ -96,7 +96,7 @@ export default class DatatableActionDefinitionFactory {
                                 };
                             };
 
-                            const dataTableFactory = that.resultViewerService.dataTableFactory;
+                            const dataTableFactory = that._resultViewerService.dataTableFactory;
                             const dataTable = await dataTableFactory.createDataTableFromStoreAndQuery({
                                 dataTableTitle: store.title || store.id || i18n.searchResultTitle,
                                 dataSource: store,
@@ -104,11 +104,11 @@ export default class DatatableActionDefinitionFactory {
                             });
 
                             const dataTableCollection = dataTableFactory.createDataTableCollection([dataTable]);
-                            that.resultViewerService.open(dataTableCollection);
+                            that._resultViewerService.open(dataTableCollection);
                         }
                         // resulcenter is used
-                        else if (that.dataModel) {
-                            that.dataModel.setDatasource(store);
+                        else if (that._dataModel) {
+                            that._dataModel.setDatasource(store);
                         }
                         // neither resultcenter nor result-ui is available
                         else {
@@ -121,10 +121,10 @@ export default class DatatableActionDefinitionFactory {
     }
 
     setDataModel(dataModel: any): void {
-        this.dataModel = dataModel;
+        this._dataModel = dataModel;
     }
 
     setResultViewerService(resultViewerService: any): void {
-        this.resultViewerService = resultViewerService;
+        this._resultViewerService = resultViewerService;
     }
 }

@@ -24,14 +24,16 @@
                     "providing": "agssearch.AGSStoreFactory"
                 },
                 {
-                    "name": "dataModel",
+                    "name": "_dataModel",
                     "providing": "resultcenter.DataModel",
-                    "cardinality": "0..1"
+                    "cardinality": "0..1",
+                    "bind": "setDatamodel"
                 },
                 {
-                    "name": "resultViewerService",
+                    "name": "_resultViewerService",
                     "providing": "result-api.ResultViewerService",
-                    "cardinality": "0..1"
+                    "cardinality": "0..1",
+                    "bind": "setResultViewerService"
                 }
             ]
         }
