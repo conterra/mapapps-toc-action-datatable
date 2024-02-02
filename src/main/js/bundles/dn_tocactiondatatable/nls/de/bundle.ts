@@ -18,9 +18,9 @@ import { type Messages } from "../bundle";
 
 const i18n = {
     bundleName: "TOC Action Datatable",
-    bundleDescription: "This bundle provides an additional toc action that opens the map.apps resultcenter and shows all features of a layer in tabular form.",
-    actionLabel: "Show attribute table",
-    searchResultTitle: "Action Datatable"
+    bundleDescription: "Dieses Bundle erweitert die TOC Actions um eine weitere, die das map.apps Ergebniscenter öffnet und dort alle Features eines Layers in tabellarischer Form anzeigt.",
+    actionLabel: "Tabelle anzeigen",
+    searchResultTitle: "Action Datentabelle"
 } satisfies Messages;
 
 export default i18n;
