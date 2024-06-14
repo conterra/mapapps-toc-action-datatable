@@ -31,7 +31,7 @@ export default class DatatableActionDefinitionFactory {
 
     private supportedIds: Array<string>;
 
-    constructor(props: Record<string, any>) {
+    constructor() {
         this.supportedIds = [ID];
     }
 
