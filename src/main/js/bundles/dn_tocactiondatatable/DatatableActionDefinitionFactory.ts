@@ -87,20 +87,12 @@ export default class DatatableActionDefinitionFactory {
                     store.load().then(async () => {
                         // result-ui is used
                         if (that._resultViewerService) {
-                            const idsProvider = async ({ limit }) => {
-                                const result = await store.query({}, {
-                                    count: limit
-                                });
-                                return {
-                                    ids: result.map((item) => item.id)
-                                };
-                            };
-
                             const dataTableFactory = that._resultViewerService.dataTableFactory;
                             const dataTable = await dataTableFactory.createDataTableFromStoreAndQuery({
                                 dataTableTitle: store.title || store.id || i18n.searchResultTitle,
                                 dataSource: store,
-                                idsProvider
+                                queryExpression: {},
+                                queryOptions: {}
                             });
 
                             const dataTableCollection = dataTableFactory.createDataTableCollection([dataTable]);
