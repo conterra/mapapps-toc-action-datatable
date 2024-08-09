@@ -73,10 +73,13 @@ export default class DatatableActionDefinitionFactory {
             trigger(tocItem: TocItem): void {
                 const ref = tocItem.ref;
                 let id = ref.id;
+                let title = ref?.title;
                 if (ref?.type === "map-image") {
                     id = `${id}/${ref.sublayers.items[0].id}`;
+                    title = ref.sublayers.items[0].title;
                 } else if (ref?.layer?.type === "map-image") {
                     id = `${ref.layer.id}/${id}`;
+                    title = ref.layer.title;
                 }
                 const storeProps = {
                     id: `action_store_${new Date().getTime()}`,
@@ -89,7 +92,7 @@ export default class DatatableActionDefinitionFactory {
                         if (that._resultViewerService) {
                             const dataTableFactory = that._resultViewerService.dataTableFactory;
                             const dataTable = await dataTableFactory.createDataTableFromStoreAndQuery({
-                                dataTableTitle: store.title || store.id || i18n.searchResultTitle,
+                                dataTableTitle: title || store.title || store.id || i18n.searchResultTitle,
                                 dataSource: store,
                                 queryExpression: {},
                                 queryOptions: {}
