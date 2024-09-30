@@ -59,10 +59,9 @@ export default class DatatableActionDefinitionFactory {
                         return true;
                     } else if (capabilities?.operations?.supportsQuery) {
                         return true;
-                    } else if (parent?.visibilityMode === "exclusive") {
-                        return ref.sublayers && tocItem.listMode === "hide-children";
-                    }
-                    else {
+                    } else if (ref.sublayers.length === 1 && tocItem.listMode === "hide-children") {
+                        return true;
+                    } else {
                         return false;
                     }
                 } else {
