@@ -35,12 +35,12 @@ export default class DatatableActionDefinitionFactory {
         this.supportedIds = [ID];
     }
 
-    public createDefinitionById(id: string): ActionDefinition {
+    public createDefinitionById(id: string): ActionDefinition | undefined {
         if (ID !== id) {
             return;
         }
         const i18n = this._i18n.get();
-        const agsStoreFactory = this._agsStoreFactory;
+        const agsStoreFactory = this._agsStoreFactory!;
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const that = this;
 
@@ -59,7 +59,7 @@ export default class DatatableActionDefinitionFactory {
                         return true;
                     } else if (capabilities?.operations?.supportsQuery) {
                         return true;
-                    } else if (parent.visibilityMode === "exclusive") {
+                    } else if (parent?.visibilityMode === "exclusive") {
                         return ref.sublayers && tocItem.listMode === "hide-children";
                     }
                     else {
