@@ -55,7 +55,7 @@ export default class DatatableActionDefinitionFactory {
                 const parent = ref && ref.parent;
                 const capabilities = parent && parent.capabilities;
                 if (ref && ref.sourceJSON?.type !== "Group Layer" && ref.type !== "group") {
-                    if (ref.sourceJSON?.type === "Feature Layer" || ref.type === "feature") {
+                    if (ref.sourceJSON?.type === "Feature Layer" || ref.type === "feature" || ref.type === "ogc-feature") {
                         return true;
                     } else if (capabilities?.operations?.supportsQuery) {
                         return true;
