@@ -86,6 +86,14 @@
                 "map": {
                     "layers": [
                         {
+                            "id": "fluren",
+                            "url": "https://ogc-api.nrw.de/lika/v1/",
+                            "type": "OGC_FEATURE",
+                            "title": "Flurstücke in NRW",
+                            "collectionId": "flurstueck",
+                            "maxRecordCount": 5000
+                        },
+                        {
                             "type": "GROUP",
                             "title": "Bäume",
                             "visible": true,
