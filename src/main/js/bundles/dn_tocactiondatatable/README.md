@@ -2,6 +2,8 @@
 
 This bundle provides an additional toc action that opens the map.apps resultcenter and shows all features of a layer in tabular form.
 
+Warning: Using this bundle in combination with OGC_FEATURE layers may lead to performance issues. Please set an appropriate maxRecordCount to avoid these.
+
 ## Usage
 **Requirement: map.apps 4.13.0**
 
