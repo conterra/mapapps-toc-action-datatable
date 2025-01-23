@@ -217,6 +217,20 @@
                                     }
                                 }
                             ]
+                        },
+                        {
+                            "id": "earthquakes",
+                            "title": "Erdbeben",
+                            "type": "AGS_DYNAMIC",
+                            "url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/MapServer",
+                            "listMode": "hide-children"
+                        },
+                        {
+                            "id": "hsnr",
+                            "title": "Hausnummern in Münster",
+                            "type": "AGS_DYNAMIC",
+                            "url": "https://services.conterra.de/arcgis/rest/services/common/hausnr_ms/MapServer",
+                            "listMode": "hide-children"
                         }
                     ],
                     "ground": {
