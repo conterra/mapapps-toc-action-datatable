@@ -15,7 +15,7 @@
  */
 module.exports = {
     root: {
-        apptitle: "map.apps 4 Sample",
+        apptitle: "TOC Action Data Table",
         map: {
             koeln1: {
                 title: "Basic Data",
@@ -34,6 +34,7 @@ module.exports = {
             },
             koeln2: {
                 title: "Education and Culture",
+                description: "List of all libraries, museums and schools in Cologne.",
                 libraries: {
                     title: "Libraries"
                 },
@@ -69,10 +70,30 @@ module.exports = {
                 }
             },
             basemaps: {
+                gray: "Street Map (gray)",
                 streets: "Street Map",
                 topo: "Topographical Map",
-                satellite: "Aerial (hybrid)"
+                hybrid: "Aerial (hybrid)"
             }
+        },
+        tools: {
+            drawerLeft: "Tools",
+            measuring: "Measuring Tools"
+        },
+        common: {
+            number: "Number",
+            area: "Area [ha]",
+            totalArea: "Percentage of the total area [%]",
+            name: "Name",
+            provider: "Provider",
+            address: "Address",
+            furtherinfo: "Further Information",
+            precint: "Precint",
+            district: "District",
+            private: "privater",
+            municipal: "municipal",
+            zip: "Zip code",
+            type: "Type"
         }
     },
     "de": true

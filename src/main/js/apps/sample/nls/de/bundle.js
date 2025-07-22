@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 module.exports = {
-    apptitle: "map.apps 4 Sample",
+    apptitle: "TOC Action Data Table",
     map: {
         koeln1: {
             title: "Basisdaten",
@@ -33,6 +33,7 @@ module.exports = {
         },
         koeln2: {
             title: "Bildung und Kultur",
+            description: "Liste aller Bibliotheken, Museen und Schulen in Köln.",
             libraries: {
                 title: "Bibliotheken"
             },
@@ -69,9 +70,29 @@ module.exports = {
             }
         },
         basemaps: {
-            streets: "Stra\u00DFenkarte",
+            gray: "Stra\xDFenkarte (grau)",
+            streets: "Stra\xDFenkarte",
             topo: "Topographische Karte",
-            satellite: "Luftbild"
+            hybrid: "Luftbild (hybrid)"
         }
+    },
+    tools: {
+        drawerLeft: "Werkzeuge",
+        measuring: "Messwerkzeuge"
+    },
+    common: {
+        number: "Nummer",
+        area: "Fl\xE4che [ha]",
+        totalArea: "Anteil an Gesamtfl\xE4che [%]",
+        name: "Name",
+        provider: "Tr\xE4ger",
+        address: "Adresse",
+        furtherinfo: "Weitere Informationen",
+        precint: "Stadtbezirk",
+        district: "Stadtviertel",
+        private: "private",
+        municipal: "st\xE4dtischer",
+        zip: "PLZ",
+        type: "Art"
     }
 };
