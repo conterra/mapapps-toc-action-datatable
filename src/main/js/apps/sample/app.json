@@ -469,6 +469,13 @@
                 "showLayerLegend": true
             }
         },
+        "toolrules": {
+            "ToolActiveStateManager": {
+                "activateOnStartToolIds": [
+                    "tocToggleTool"
+                ]
+            }
+        },
         "toolset": {
             "ToolsetManager": {
                 "toolsets": [
