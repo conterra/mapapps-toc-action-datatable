@@ -1,11 +1,12 @@
+[![devnet-bundle-snapshot](https://github.com/conterra/mapapps-toc-action-datatable/actions/workflows/devnet-bundle-snapshot.yml/badge.svg)](https://github.com/conterra/mapapps-toc-action-datatable/actions/workflows/devnet-bundle-snapshot.yml)
+![Static Badge](https://img.shields.io/badge/requires_map.apps-4.13.0-e5e5e5?labelColor=%233E464F&logoColor=%23e5e5e5)
+![Static Badge](https://img.shields.io/badge/tested_for_map.apps-4.20.0-%20?labelColor=%233E464F&color=%232FC050)
+
 # TOC Action Datatable
 
 This bundle provides an additional toc action that opens the map.apps resultcenter and shows all features of a layer in tabular form.
 
 ![Screenshot App](https://github.com/conterra/mapapps-toc-action-datatable/blob/main/screenshot.JPG)
-
-## Build Status
-[![devnet-bundle-snapshot](https://github.com/conterra/mapapps-toc-action-datatable/actions/workflows/devnet-bundle-snapshot.yml/badge.svg)](https://github.com/conterra/mapapps-toc-action-datatable/actions/workflows/devnet-bundle-snapshot.yml)
 
 ## Sample App
 https://demos.conterra.de/mapapps/resources/apps/public_demo_tocactiondatatable/index.html
