@@ -24,10 +24,7 @@ test('Create Screenshot for GitHub Page', async ({ page }) => {
     await page.goto('http://localhost:9090/');
     const canvas = new MapCanvas(page);
     await canvas.loaded();
-
-    await page.getByRole('button', { name: 'Show child elements of Bäume' }).click();
-    await page.getByRole('button', { name: 'Show options for layer Bäume ohne Children' }).click();
-    await page.getByRole('button', { name: 'Show attribute table' }).click();
+    await canvas.clickOnMap({ x: 400, y: 400 });
 
     await expectToMatchScreenshot(page, "screenshot.png", {
         timeout: 10000
