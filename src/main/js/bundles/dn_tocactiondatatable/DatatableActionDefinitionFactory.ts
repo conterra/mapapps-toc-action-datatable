@@ -20,6 +20,7 @@ import type { AGSStoreFactory } from "agssearch/api";
 import { Messages } from "./nls/bundle";
 import { ResultViewerService } from "result-api/api";
 import { TocItem } from "toc/model/TocItem";
+import { ComponentContext } from "apprt/api";
 
 const ID = "datatable";
 
@@ -28,6 +29,7 @@ export default class DatatableActionDefinitionFactory {
     private _agsStoreFactory: InjectedReference<AGSStoreFactory>;
     private _dataModel: InjectedReference<any>;
     private _resultViewerService: InjectedReference<ResultViewerService>;
+    private _componentContext: InjectedReference<ComponentContext>;
 
     private supportedIds: Array<string>;
 
@@ -80,8 +82,27 @@ export default class DatatableActionDefinitionFactory {
                     id = `${ref.layer.id}/${id}`;
                     title = ref.layer.title;
                 }
+
+                const stores = that._componentContext?.getBundleContext().
+                    getServiceReferences(`ct.api.Store`, `(id=*)`);
+
+                let storeId: string | undefined;
+
+                if(stores){
+                    stores.forEach((store) => {
+                        const layerId = store.getProperty("layerId");
+                        if(layerId && layerId == id){
+                            storeId = store.getProperty("id");
+                        }
+                    });
+                }
+
+                if(!storeId){
+                    storeId = `action_store_${new Date().getTime()}`;
+                }
+
                 const storeProps = {
-                    id: `action_store_${new Date().getTime()}`,
+                    id: storeId,
                     layerId: id
                 };
 
@@ -91,6 +112,7 @@ export default class DatatableActionDefinitionFactory {
                         if (that._resultViewerService) {
                             const dataTableFactory = that._resultViewerService.dataTableFactory;
                             const dataTable = await dataTableFactory.createDataTableFromStoreAndQuery({
+                                dataTableId: storeId,
                                 dataTableTitle: title || store.title || store.id || i18n.searchResultTitle,
                                 dataSource: store,
                                 queryExpression: {},
