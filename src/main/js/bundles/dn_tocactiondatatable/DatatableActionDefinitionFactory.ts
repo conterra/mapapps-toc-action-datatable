@@ -86,11 +86,14 @@ export default class DatatableActionDefinitionFactory {
 
                 let storeId: string | undefined;
 
+                let existingStore: Store<any> | undefined;
+
                 if(stores){
                     stores.forEach((store) => {
                         const layerId = store.layerId;
                         if(layerId && layerId == id){
                             storeId = store.id;
+                            existingStore = store;
                         }
                     });
                 }
@@ -104,32 +107,14 @@ export default class DatatableActionDefinitionFactory {
                     layerId: id
                 };
 
-                agsStoreFactory.createStore(storeProps).then((store) => {
-                    store.load().then(async () => {
-                        // result-ui is used
-                        if (that._resultViewerService) {
-                            const dataTableFactory = that._resultViewerService.dataTableFactory;
-                            const dataTable = await dataTableFactory.createDataTableFromStoreAndQuery({
-                                dataTableId: storeId,
-                                dataTableTitle: title || store.title || store.id || i18n.searchResultTitle,
-                                dataSource: store,
-                                queryExpression: {},
-                                queryOptions: {}
-                            });
-
-                            const dataTableCollection = dataTableFactory.createDataTableCollection([dataTable]);
-                            that._resultViewerService.open(dataTableCollection);
-                        }
-                        // resulcenter is used
-                        else if (that._dataModel) {
-                            that._dataModel.setDatasource(store);
-                        }
-                        // neither resultcenter nor result-ui is available
-                        else {
-                            return;
-                        }
+                if(existingStore){
+                    that.showResults(existingStore, that, storeId, i18n, title);
+                } else {
+                    agsStoreFactory.createStore(storeProps).then((store) => {
+                        that.showResults(store, that, storeId, i18n, title);
                     });
-                });
+
+                }
             }
         };
     }
@@ -140,5 +125,32 @@ export default class DatatableActionDefinitionFactory {
 
     setResultViewerService(resultViewerService: any): void {
         this._resultViewerService = resultViewerService;
+    }
+
+    showResults(store: any, that: any, storeId: string | undefined, i18n: Messages, title: string): void {
+        store.load().then(async () => {
+            // result-ui is used
+            if (that._resultViewerService) {
+                const dataTableFactory = that._resultViewerService.dataTableFactory;
+                const dataTable = await dataTableFactory.createDataTableFromStoreAndQuery({
+                    dataTableId: storeId,
+                    dataTableTitle: title || store.title || store.id || i18n.searchResultTitle,
+                    dataSource: store,
+                    queryExpression: {},
+                    queryOptions: {}
+                });
+
+                const dataTableCollection = dataTableFactory.createDataTableCollection([dataTable]);
+                that._resultViewerService.open(dataTableCollection);
+            }
+            // resultcenter is used
+            else if (that._dataModel) {
+                that._dataModel.setDatasource(store);
+            }
+            // neither resultcenter nor result-ui is available
+            else {
+                return;
+            }
+        });
     }
 }
