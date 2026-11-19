@@ -20,7 +20,7 @@ import type { AGSStoreFactory } from "agssearch/api";
 import { Messages } from "./nls/bundle";
 import { ResultViewerService } from "result-api/api";
 import { TocItem } from "toc/model/TocItem";
-import { ComponentContext } from "apprt/api";
+import type { Store } from "store-api/api";
 
 const ID = "datatable";
 
@@ -29,7 +29,7 @@ export default class DatatableActionDefinitionFactory {
     private _agsStoreFactory: InjectedReference<AGSStoreFactory>;
     private _dataModel: InjectedReference<any>;
     private _resultViewerService: InjectedReference<ResultViewerService>;
-    private _componentContext: InjectedReference<ComponentContext>;
+    private _stores: InjectedReference<Store<any>[]>;
 
     private supportedIds: Array<string>;
 
@@ -43,6 +43,7 @@ export default class DatatableActionDefinitionFactory {
         }
         const i18n = this._i18n.get();
         const agsStoreFactory = this._agsStoreFactory!;
+        const stores = this._stores;
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const that = this;
 
@@ -83,16 +84,13 @@ export default class DatatableActionDefinitionFactory {
                     title = ref.layer.title;
                 }
 
-                const stores = that._componentContext?.getBundleContext().
-                    getServiceReferences(`ct.api.Store`, `(id=*)`);
-
                 let storeId: string | undefined;
 
                 if(stores){
                     stores.forEach((store) => {
-                        const layerId = store.getProperty("layerId");
+                        const layerId = store.layerId;
                         if(layerId && layerId == id){
-                            storeId = store.getProperty("id");
+                            storeId = store.id;
                         }
                     });
                 }
