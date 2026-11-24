@@ -20,6 +20,7 @@ import type { AGSStoreFactory } from "agssearch/api";
 import { Messages } from "./nls/bundle";
 import { ResultViewerService } from "result-api/api";
 import { TocItem } from "toc/model/TocItem";
+import type { Store } from "store-api/api";
 
 const ID = "datatable";
 
@@ -28,6 +29,7 @@ export default class DatatableActionDefinitionFactory {
     private _agsStoreFactory: InjectedReference<AGSStoreFactory>;
     private _dataModel: InjectedReference<any>;
     private _resultViewerService: InjectedReference<ResultViewerService>;
+    private _stores: InjectedReference<Store<any>[]>;
 
     private supportedIds: Array<string>;
 
@@ -41,6 +43,7 @@ export default class DatatableActionDefinitionFactory {
         }
         const i18n = this._i18n.get();
         const agsStoreFactory = this._agsStoreFactory!;
+        const stores = this._stores;
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const that = this;
 
@@ -80,36 +83,38 @@ export default class DatatableActionDefinitionFactory {
                     id = `${ref.layer.id}/${id}`;
                     title = ref.layer.title;
                 }
+
+                let storeId: string | undefined;
+
+                let existingStore: Store<any> | undefined;
+
+                if(stores){
+                    stores.forEach((store) => {
+                        const layerId = store.layerId;
+                        if(layerId && layerId == id){
+                            storeId = store.id;
+                            existingStore = store;
+                        }
+                    });
+                }
+
+                if(!storeId){
+                    storeId = `action_store_${new Date().getTime()}`;
+                }
+
                 const storeProps = {
-                    id: `action_store_${new Date().getTime()}`,
+                    id: storeId,
                     layerId: id
                 };
 
-                agsStoreFactory.createStore(storeProps).then((store) => {
-                    store.load().then(async () => {
-                        // result-ui is used
-                        if (that._resultViewerService) {
-                            const dataTableFactory = that._resultViewerService.dataTableFactory;
-                            const dataTable = await dataTableFactory.createDataTableFromStoreAndQuery({
-                                dataTableTitle: title || store.title || store.id || i18n.searchResultTitle,
-                                dataSource: store,
-                                queryExpression: {},
-                                queryOptions: {}
-                            });
-
-                            const dataTableCollection = dataTableFactory.createDataTableCollection([dataTable]);
-                            that._resultViewerService.open(dataTableCollection);
-                        }
-                        // resulcenter is used
-                        else if (that._dataModel) {
-                            that._dataModel.setDatasource(store);
-                        }
-                        // neither resultcenter nor result-ui is available
-                        else {
-                            return;
-                        }
+                if(existingStore){
+                    that.showResults(existingStore, that, storeId, i18n, title);
+                } else {
+                    agsStoreFactory.createStore(storeProps).then((store) => {
+                        that.showResults(store, that, storeId, i18n, title);
                     });
-                });
+
+                }
             }
         };
     }
@@ -120,5 +125,32 @@ export default class DatatableActionDefinitionFactory {
 
     setResultViewerService(resultViewerService: any): void {
         this._resultViewerService = resultViewerService;
+    }
+
+    showResults(store: any, that: any, storeId: string | undefined, i18n: Messages, title: string): void {
+        store.load().then(async () => {
+            // result-ui is used
+            if (that._resultViewerService) {
+                const dataTableFactory = that._resultViewerService.dataTableFactory;
+                const dataTable = await dataTableFactory.createDataTableFromStoreAndQuery({
+                    dataTableId: storeId,
+                    dataTableTitle: title || store.title || store.id || i18n.searchResultTitle,
+                    dataSource: store,
+                    queryExpression: {},
+                    queryOptions: {}
+                });
+
+                const dataTableCollection = dataTableFactory.createDataTableCollection([dataTable]);
+                that._resultViewerService.open(dataTableCollection);
+            }
+            // resultcenter is used
+            else if (that._dataModel) {
+                that._dataModel.setDatasource(store);
+            }
+            // neither resultcenter nor result-ui is available
+            else {
+                return;
+            }
+        });
     }
 }

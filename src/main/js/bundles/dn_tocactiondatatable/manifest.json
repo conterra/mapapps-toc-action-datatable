@@ -34,6 +34,12 @@
                     "providing": "result-api.ResultViewerService",
                     "cardinality": "0..1",
                     "bind": "setResultViewerService"
+                },
+                {
+                    "name": "_stores",
+                    "providing": "ct.api.Store",
+                    "cardinality": "0..n",
+                    "filter": "(id=*)"
                 }
             ]
         }
